@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="ejb" url="file://$PROJECT_DIR$/MessageManager-ejb" />
     <file type="javaeeApplication" url="file://$PROJECT_DIR$/MessageManager-ear" />
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
@@ -10,6 +11,7 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/MessageManager-rest/pom.xml" />
         <option value="$PROJECT_DIR$/MessageManager-ear/pom.xml" />
+        <option value="$PROJECT_DIR$/MessageManager-ejb/pom.xml" />
       </list>
     </option>
   </component>

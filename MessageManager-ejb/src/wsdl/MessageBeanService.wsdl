@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+        xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy"
+        xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:tns="http://service/"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://service/" name="MessageBeanService">
+<types>
+<xsd:schema>
+<xsd:import namespace="http://service/" schemaLocation="MessageBeanService.xsd"/>
+</xsd:schema>
+</types>
+<message name="getMessagesBySender">
+<part name="parameters" element="tns:getMessagesBySender"/>
+</message>
+<message name="getMessagesBySenderResponse">
+<part name="parameters" element="tns:getMessagesBySenderResponse"/>
+</message>
+<message name="getMessagesByDate">
+<part name="parameters" element="tns:getMessagesByDate"/>
+</message>
+<message name="getMessagesByDateResponse">
+<part name="parameters" element="tns:getMessagesByDateResponse"/>
+</message>
+
+<portType name="MessageManagerService">
+<operation name="getMessagesBySender">
+<input wsam:Action="http://service/MessageFacadeService/getMessagesBySenderRequest" message="tns:getMessagesBySender"/>
+<output wsam:Action="http://service/MessageFacadeService/getMessagesBySenderResponse" message="tns:getMessagesBySenderResponse"/>
+</operation>
+<operation name="getMessagesByDate">
+<input wsam:Action="http://service/MessageFacadeService/getMessagesByDateRequest" message="tns:getMessagesByDate"/>
+<output wsam:Action="http://service/MessageFacadeService/getMessagesByDateResponse" message="tns:getMessagesByDateResponse"/>
+</operation>
+
+</portType>
+<binding name="MessageBeanPortBinding" type="tns:MessageManagerService">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="getMessagesBySender">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getMessagesByDate">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+
+</binding>
+<service name="MessageBeanService">
+<port name="MessageBeanPort" binding="tns:MessageBeanPortBinding">
+<soap:address location="http://10.31.70.181:7086/MessageBean/MessageBeanService"/>
+</port>
+</service>
+</definitions>

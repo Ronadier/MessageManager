@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="ejb-jar" name="MessageManager-ejb:ejb">
+    <output-path>$PROJECT_DIR$/MessageManager-ejb/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>MessageManager-ejb</module>
+        <packaging>ejb</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="MessageManager-ejb-1.0-SNAPSHOT.jar">
+      <element id="artifact" artifact-name="MessageManager-ejb:ejb exploded" />
+    </root>
+  </artifact>
+</component>
