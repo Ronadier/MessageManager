@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="ear" name="MessageManager-ear:ear">
+    <output-path>$PROJECT_DIR$/MessageManager-ear/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>MessageManager-ear</module>
+        <packaging>ear</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="MessageManager-ear-1.0-SNAPSHOT.ear">
+      <element id="artifact" artifact-name="MessageManager-ear:ear exploded" />
+    </root>
+  </artifact>
+</component>

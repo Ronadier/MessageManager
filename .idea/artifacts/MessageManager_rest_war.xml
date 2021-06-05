@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="MessageManager-rest:war">
+    <output-path>$PROJECT_DIR$/MessageManager-rest/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>MessageManager-rest</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="MessageManager-rest-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="MessageManager-rest:war exploded" />
+    </root>
+  </artifact>
+</component>
