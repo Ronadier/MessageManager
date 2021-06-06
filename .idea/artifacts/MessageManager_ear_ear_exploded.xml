@@ -17,6 +17,9 @@
       <element id="archive" name="MessageManager-rest-1.0-SNAPSHOT.war">
         <element id="artifact" artifact-name="MessageManager-rest:war exploded" />
       </element>
+      <element id="archive" name="MessageManager-ejb-1.0-SNAPSHOT.jar">
+        <element id="artifact" artifact-name="MessageManager-ejb:ejb exploded" />
+      </element>
     </root>
   </artifact>
 </component>

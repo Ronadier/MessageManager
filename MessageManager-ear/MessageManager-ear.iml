@@ -36,5 +36,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="MessageManager-rest" />
+    <orderEntry type="module" module-name="MessageManager-ejb" />
   </component>
 </module>
