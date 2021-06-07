@@ -16,11 +16,11 @@ import java.util.List;
 public class MessagesBean implements MessageManagerService {
     @Override
     public List<Message> getMessagesBySender(String sender) {
-        return Resp.getMessagesBySender(sender);
+        return SoapProcess.getMessagesBySender(sender);
     }
 
     @Override
     public List<Message> getMessagesByDate(XMLGregorianCalendar sendTime) {
-        return Resp.getMessagesByDate(sendTime);
+        return SoapProcess.getMessagesByDate(sendTime);
     }
 }
