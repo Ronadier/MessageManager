@@ -2,16 +2,29 @@ package com.example.MessageManager_rest;
 
 import com.google.gson.Gson;
 
-//import javax.ws.rs.Consumes;
+import javax.annotation.Resource;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-//import javax.ws.rs.Produces;
-//import javax.ws.rs.core.MediaType;
+
 
 @Path("/message")
 public class RestApplication {
+    InitialContext context;
+
+    {
+        try {
+            context = new InitialContext();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Resource
+
     @POST
     public String addMessage(String json) {
         String result = "SUCCESS";
