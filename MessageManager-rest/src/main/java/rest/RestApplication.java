@@ -1,5 +1,7 @@
 package rest;
 
+import jms.JMSproducer;
+
 import javax.annotation.Resource;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -24,8 +26,8 @@ public class RestApplication {
     @Resource
 
     @POST
-    public String addMessage(String json) {
-        return "SUCCESS";
+    public String addMessage(String message) {
+        return JMSproducer.addMessage(message);
     }
 
     @DELETE
