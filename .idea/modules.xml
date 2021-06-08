@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MessageManager.iml" filepath="$PROJECT_DIR$/MessageManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MessageManager-config/MessageManager-config.iml" filepath="$PROJECT_DIR$/MessageManager-config/MessageManager-config.iml" />
       <module fileurl="file://$PROJECT_DIR$/MessageManager-ear/MessageManager-ear.iml" filepath="$PROJECT_DIR$/MessageManager-ear/MessageManager-ear.iml" />
       <module fileurl="file://$PROJECT_DIR$/MessageManager-ejb/MessageManager-ejb.iml" filepath="$PROJECT_DIR$/MessageManager-ejb/MessageManager-ejb.iml" />
       <module fileurl="file://$PROJECT_DIR$/MessageManager-rest/MessageManager-rest.iml" filepath="$PROJECT_DIR$/MessageManager-rest/MessageManager-rest.iml" />

@@ -21,7 +21,11 @@
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>MessageManager-config</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>

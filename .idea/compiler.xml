@@ -9,10 +9,12 @@
         <module name="MessageManager-ear" />
         <module name="MessageManager-ejb" />
         <module name="MessageManager-rest" />
+        <module name="MessageManager-config" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="MessageManager" target="1.8" />
+      <module name="MessageManager-config" target="1.8" />
       <module name="MessageManager-ear" target="1.7" />
       <module name="MessageManager-ejb" target="1.8" />
       <module name="MessageManager-rest" target="1.8" />

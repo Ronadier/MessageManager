@@ -43,7 +43,7 @@
     <modules>
         <module>MessageManager-rest</module>
         <module>MessageManager-ejb</module>
-<!--        <module>MessageManager-config</module>-->
+        <module>MessageManager-config</module>
         <module>MessageManager-ear</module>
     </modules>
 </project>

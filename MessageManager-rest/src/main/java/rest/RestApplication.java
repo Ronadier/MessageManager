@@ -1,6 +1,4 @@
-package com.example.MessageManager_rest;
-
-import com.google.gson.Gson;
+package rest;
 
 import javax.annotation.Resource;
 import javax.naming.InitialContext;
@@ -27,9 +25,7 @@ public class RestApplication {
 
     @POST
     public String addMessage(String json) {
-        String result = "SUCCESS";
-        Gson gson = new Gson();
-        return gson.toJson(result);
+        return "SUCCESS";
     }
 
     @DELETE

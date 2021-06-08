@@ -37,5 +37,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="MessageManager-rest" />
     <orderEntry type="module" module-name="MessageManager-ejb" />
+    <orderEntry type="module" module-name="MessageManager-config" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:1.4" level="project" />
   </component>
 </module>

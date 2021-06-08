@@ -20,6 +20,12 @@
       <element id="archive" name="MessageManager-ejb-1.0-SNAPSHOT.jar">
         <element id="artifact" artifact-name="MessageManager-ejb:ejb exploded" />
       </element>
+      <element id="directory" name="lib">
+        <element id="archive" name="MessageManager-config-1.0-SNAPSHOT.jar">
+          <element id="module-output" name="MessageManager-config" />
+        </element>
+        <element id="library" level="project" name="Maven: commons-io:commons-io:1.4" />
+      </element>
     </root>
   </artifact>
 </component>
