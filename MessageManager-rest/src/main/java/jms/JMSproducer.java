@@ -36,6 +36,28 @@ public class JMSproducer {
             qcon.start();
             msg.setText(message);
             qsender.send(msg);
+            return JMSconsumer.readFromJMS();
+        } catch (JMSException e) {
+            return e.getMessage();
+        }
+    }
+
+    public static String deleteMessage(Integer id) {
+        try {
+            initialContext = new InitialContext();
+            qconFactory = (QueueConnectionFactory) initialContext.lookup(JMS_FACTORY);
+            queue = (Queue) initialContext.lookup(TEST_QUEUE);
+        } catch (NamingException e) {
+            return e.getMessage();
+        }
+        try {
+            qcon = qconFactory.createQueueConnection();
+            qsession = qcon.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+            qsender = qsession.createSender(queue);
+            msg = qsession.createTextMessage();
+            qcon.start();
+            msg.setText("del: id = " + id);
+            qsender.send(msg);
             return "Success";
         } catch (JMSException e) {
             return e.getMessage();

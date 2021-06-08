@@ -33,6 +33,6 @@ public class RestApplication {
     @DELETE
     @Path("/{id}")
     public String deleteMessage(@PathParam("id")Integer id) {
-        return "SUCCESS, " + id;
+        return JMSproducer.deleteMessage(id);
     }
 }
