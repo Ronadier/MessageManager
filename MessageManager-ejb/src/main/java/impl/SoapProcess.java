@@ -3,6 +3,10 @@ package impl;
 import service.Message;
 
 import javax.ejb.EJB;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -10,47 +14,45 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 public class SoapProcess {
-
-
+    private static Statement statement;
+    private static List<Message> res = new ArrayList<>();
+    static {
+        try {
+            Context initContext = new InitialContext();
+            DataSource ds = (DataSource) initContext.lookup("testDS");
+            Connection jc = ds.getConnection();
+            statement = jc.createStatement();
+        } catch (NamingException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static List<Message> getMessagesBySender(String sender) {
-        List<Message> res = new ArrayList<>();
+
             try {
-                Connection connection = DriverManager
-                        .getConnection("jdbc:postgresql://192.168.70.181:7100/eip", "coder", "");
-                Statement statement = connection.createStatement();
                 ResultSet rs = statement
-                        .executeQuery("select id, sender, send_time, content from messages where sender = " + "\'" + sender + "\'");
-                int i = 0;
-                while (rs.next()) {
-                    res.add(new Message());
-                    res.get(i).setId(rs.getInt(1));
-                    res.get(i).setSender(rs.getString(2));
-                    Timestamp ts = rs.getTimestamp(3);
-                    GregorianCalendar gc = new GregorianCalendar();
-                    gc.setTime(new Date(ts.getTime()));
-                    XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc);
-                    res.get(i).setSendTime(cal);
-                    res.get(i).setContent(rs.getString(4));
-                    i++;
-                }
-            } catch (SQLException throwables) {
-                res.add(new Message());
-                res.get(0).setSender(throwables.getMessage());
-                res.get(0).setContent(throwables.getSQLState());
-            } catch (DatatypeConfigurationException e) {
-                e.printStackTrace();
+                        .executeQuery("select id, sender, send_time, content from messages where sender = \'" + sender + "\'");
+                res = AddMessage.addMessage(rs);
+            } catch (SQLException | DatatypeConfigurationException throwables) {
+                throwables.printStackTrace();
             }
         return res;
     }
 
     public static List<Message> getMessagesByDate(XMLGregorianCalendar sendTime) {
-        List<Message> res = new ArrayList<>();
-        res.add(new Message());
-        res.get(0).setSendTime(sendTime);
+        Date date = new Date(sendTime.toGregorianCalendar().getTimeInMillis());
+        try {
+            ResultSet rs = statement
+                    .executeQuery("select id, sender, send_time, content from messages WHERE DATE(send_time) = \'" + date + "\'");
+            res = AddMessage.addMessage(rs);
+        } catch (SQLException | DatatypeConfigurationException throwables) {
+            throwables.printStackTrace();
+        }
+
         return res;
     }
 }
