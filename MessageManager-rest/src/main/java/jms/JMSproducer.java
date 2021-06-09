@@ -1,15 +1,27 @@
 package jms;
 
+import config.ConfigHelper;
+
 import javax.jms.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-
+import javax.xml.bind.JAXBException;
 
 
 public class JMSproducer {
-    private static final String JMS_FACTORY = "TestConnectionFactory";
-    private static final String TEST_QUEUE = "jms/TestQueue";
+    private static String JMS_FACTORY;
+    private static String TEST_QUEUE;
+
+    static {
+        try {
+            JMS_FACTORY = ConfigHelper.getConfig().getJMS().getJNDIConnectionFactory();
+            TEST_QUEUE = ConfigHelper.getConfig().getJMS().getJNDIQueque();
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     private static QueueConnectionFactory qconFactory;
