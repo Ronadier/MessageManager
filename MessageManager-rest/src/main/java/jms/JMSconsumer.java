@@ -1,5 +1,7 @@
 package jms;
 
+import db.InsertDeleteDB;
+
 import javax.jms.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -39,7 +41,7 @@ public class JMSconsumer {
                 if (m != null) {
                     if (m instanceof TextMessage) {
                         msg = (TextMessage) m;
-                        returnJms = returnJms + msg.getText() + " ";
+                        returnJms += msg.getText();
                     } else {
                         break;
                     }
@@ -49,5 +51,13 @@ public class JMSconsumer {
         } catch (JMSException e) {
             return  e.getMessage();
         }
+    }
+
+    public static String addMessage () {
+        return InsertDeleteDB.insert(readFromJMS());
+    }
+
+    public static String deleteMessage () {
+        return InsertDeleteDB.delete(readFromJMS());
     }
 }

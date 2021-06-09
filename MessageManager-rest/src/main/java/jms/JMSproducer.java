@@ -36,7 +36,7 @@ public class JMSproducer {
             qcon.start();
             msg.setText(message);
             qsender.send(msg);
-            return JMSconsumer.readFromJMS();
+            return JMSconsumer.addMessage();
         } catch (JMSException e) {
             return e.getMessage();
         }
@@ -56,9 +56,9 @@ public class JMSproducer {
             qsender = qsession.createSender(queue);
             msg = qsession.createTextMessage();
             qcon.start();
-            msg.setText("del: id = " + id);
+            msg.setText("del: id =" + id);
             qsender.send(msg);
-            return "Success";
+            return JMSconsumer.deleteMessage();
         } catch (JMSException e) {
             return e.getMessage();
         }
