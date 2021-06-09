@@ -35,18 +35,18 @@ public class JMSconsumer {
             qreceiever = qsession.createReceiver(queue);
             msg = qsession.createTextMessage();
             qcon.start();
-            Message m;
+            Message jmsMessage;
             do {
-                m = qreceiever.receive(1);
-                if (m != null) {
-                    if (m instanceof TextMessage) {
-                        msg = (TextMessage) m;
+                jmsMessage = qreceiever.receive(1);
+                if (jmsMessage != null) {
+                    if (jmsMessage instanceof TextMessage) {
+                        msg = (TextMessage) jmsMessage;
                         returnJms += msg.getText();
                     } else {
                         break;
                     }
                 }
-            } while (m != null);
+            } while (jmsMessage != null);
             return returnJms;
         } catch (JMSException e) {
             return  e.getMessage();
