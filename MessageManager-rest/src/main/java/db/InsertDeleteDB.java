@@ -2,28 +2,20 @@ package db;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import config.ConfigHelper;
 
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.sql.DataSource;
 import javax.xml.bind.JAXBException;
-import java.sql.*;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 
 
 
 public class InsertDeleteDB {
     private static Statement statement;
-    private static String nameDs;
     static {
         try {
-            nameDs = ConfigHelper.getConfig().getDataBase().getJNDI();
-            Context initContext = new InitialContext();
-            DataSource ds = (DataSource) initContext.lookup(nameDs);
-            Connection dsConnection = ds.getConnection();
-            statement = dsConnection.createStatement();
+            statement = ConnectionToDB.createConnection();
         } catch (NamingException | SQLException | JAXBException e) {
             e.printStackTrace();
         }

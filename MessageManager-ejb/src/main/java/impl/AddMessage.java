@@ -17,12 +17,12 @@ public class AddMessage {
     public static List<Message> addMessage(ResultSet rs) throws SQLException, DatatypeConfigurationException {
         List<Message> res = new ArrayList<>();
         int i = 0;
+        GregorianCalendar gc = new GregorianCalendar();
         while (rs.next()) {
             res.add(new Message());
             res.get(i).setId(rs.getInt(1));
             res.get(i).setSender(rs.getString(2));
             Timestamp ts = rs.getTimestamp(3);
-            GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(new Date(ts.getTime()));
             XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar(gc);
             res.get(i).setSendTime(cal);

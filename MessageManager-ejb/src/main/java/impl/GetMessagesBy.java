@@ -1,30 +1,25 @@
 package impl;
 
-import config.ConfigHelper;
+import db.ConnectionToDB;
 import service.Message;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.sql.DataSource;
 import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.XMLGregorianCalendar;
-import java.sql.*;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GetMessagesBy {
     private static Statement statement;
     private static List<Message> res = new ArrayList<>();
-    private static String nameDs;
     static {
         try {
-            nameDs = ConfigHelper.getConfig().getDataBase().getJNDI();
-            Context initContext = new InitialContext();
-            DataSource ds = (DataSource) initContext.lookup(nameDs);
-            Connection dsConnection = ds.getConnection();
-            statement = dsConnection.createStatement();
+            statement = ConnectionToDB.createConnection();
         } catch (NamingException | SQLException | JAXBException e) {
             e.printStackTrace();
         }

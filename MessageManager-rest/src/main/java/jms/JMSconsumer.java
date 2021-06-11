@@ -1,28 +1,32 @@
 package jms;
 
+import config.ConfigHelper;
 import db.InsertDeleteDB;
 
 import javax.jms.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.xml.bind.JAXBException;
 
 public class JMSconsumer {
-    private static final String JMS_FACTORY = "TestConnectionFactory";
-    private static final String TEST_QUEUE = "jms/TestQueue";
+    private static String JMS_FACTORY;
+    private static String TEST_QUEUE;
 
-
-    private static QueueConnectionFactory qconFactory;
-    private static QueueConnection qcon;
-    private static QueueSession qsession;
-    private static QueueReceiver qreceiever;
-    private static Queue queue;
-    private static TextMessage msg;
-    private static Context initialContext;
+    static {
+        try {
+            JMS_FACTORY = ConfigHelper.getConfig().getJMS().getJNDIConnectionFactory();
+            TEST_QUEUE = ConfigHelper.getConfig().getJMS().getJNDIQueque();
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static String readFromJMS() {
+        QueueConnectionFactory qconFactory;
+        Queue queue;
         try {
-            initialContext = new InitialContext();
+            Context initialContext = new InitialContext();
             qconFactory = (QueueConnectionFactory) initialContext.lookup(JMS_FACTORY);
             queue = (Queue) initialContext.lookup(TEST_QUEUE);
         } catch (NamingException e) {
@@ -30,10 +34,10 @@ public class JMSconsumer {
         }
         try {
             String returnJms = "";
-            qcon = qconFactory.createQueueConnection();
-            qsession = qcon.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-            qreceiever = qsession.createReceiver(queue);
-            msg = qsession.createTextMessage();
+            QueueConnection qcon = qconFactory.createQueueConnection();
+            QueueSession qsession = qcon.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+            QueueReceiver qreceiever = qsession.createReceiver(queue);
+            TextMessage msg = qsession.createTextMessage();
             qcon.start();
             Message jmsMessage;
             do {
