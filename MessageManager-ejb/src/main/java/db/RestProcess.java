@@ -5,23 +5,12 @@ import com.google.gson.JsonParser;
 
 import javax.naming.NamingException;
 import javax.xml.bind.JAXBException;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
+import java.sql.*;
 
 
+public class RestProcess {
 
-public class InsertDeleteDB {
-    private static Statement statement;
-    static {
-        try {
-            statement = ConnectionToDB.createConnection();
-        } catch (NamingException | SQLException | JAXBException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static String insert (String readFromJSM) {
+    public static String insert(String readFromJSM) {
         JsonParser parser = new JsonParser();
         JsonObject json = parser.parse(readFromJSM).getAsJsonObject();
         JsonObject jsonTime = json.get("sendTime").getAsJsonObject();
@@ -29,12 +18,16 @@ public class InsertDeleteDB {
                 + jsonTime.get("hour").getAsString() + ":" + jsonTime.get("minute").getAsString() + ":" + jsonTime.get("second").getAsString() + "."
                 + jsonTime.get("fractionalSecond").getAsString().substring(2, 4);
         Timestamp ts = Timestamp.valueOf(time);
-        try {
-            statement.executeUpdate("INSERT INTO messages (id, sender, send_time, content) VALUES("
-                    + json.get("id").getAsInt() + ", \'" + json.get("sender").getAsString()
-                + "\',\'"+ ts + "\',\'" + json.get("content").getAsString()+ "\');");
+        try (Connection connection = ConnectionToDB.createConnection();
+             PreparedStatement statement = connection
+                     .prepareStatement("INSERT INTO messages (id, sender, send_time, content) VALUES(?,?,?,?)")) {
+            statement.setInt(1, json.get("id").getAsInt());
+            statement.setString(2, json.get("sender").getAsString());
+            statement.setTimestamp(3, ts);
+            statement.setString(4, json.get("content").getAsString());
+            statement.executeUpdate();
             return "SUCCESS";
-        } catch (SQLException throwables) {
+        } catch (SQLException | JAXBException | NamingException throwables) {
             return throwables.getMessage();
         }
     }
@@ -42,10 +35,12 @@ public class InsertDeleteDB {
     public static String delete(String readFromJMS) {
         Integer id = Integer.parseInt(readFromJMS.split("=")[1]);
 
-        try {
-            statement.executeUpdate("DELETE FROM messages WHERE id = " + id);
+        try (Connection connection = ConnectionToDB.createConnection();
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM messages WHERE id = ?")) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
             return "SUCCESS";
-        } catch (SQLException throwables) {
+        } catch (SQLException | JAXBException | NamingException throwables) {
             return throwables.getMessage();
         }
     }

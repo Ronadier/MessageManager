@@ -23,11 +23,7 @@ public class JMSproducer {
     }
 
 
-
     private static QueueConnectionFactory qconFactory;
-    private static QueueConnection qcon;
-    private static QueueSession qsession;
-    private static QueueSender qsender;
     private static Queue queue;
     private static TextMessage msg;
     private static Context initialContext;
@@ -40,10 +36,10 @@ public class JMSproducer {
         } catch (NamingException e) {
             return e.getMessage();
         }
-        try {
-            qcon = qconFactory.createQueueConnection();
-            qsession = qcon.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-            qsender = qsession.createSender(queue);
+        try (QueueConnection qcon = qconFactory.createQueueConnection();
+             QueueSession qsession = qcon.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+             QueueSender qsender = qsession.createSender(queue)) {
+
             msg = qsession.createTextMessage();
             qcon.start();
             msg.setText(message);
@@ -62,10 +58,9 @@ public class JMSproducer {
         } catch (NamingException e) {
             return e.getMessage();
         }
-        try {
-            qcon = qconFactory.createQueueConnection();
-            qsession = qcon.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-            qsender = qsession.createSender(queue);
+        try (QueueConnection qcon = qconFactory.createQueueConnection();
+             QueueSession qsession = qcon.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+             QueueSender qsender = qsession.createSender(queue)) {
             msg = qsession.createTextMessage();
             qcon.start();
             msg.setText("del: id =" + id);

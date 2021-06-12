@@ -1,7 +1,7 @@
 package jms;
 
 import config.ConfigHelper;
-import db.InsertDeleteDB;
+import db.RestProcess;
 
 import javax.jms.*;
 import javax.naming.Context;
@@ -32,11 +32,10 @@ public class JMSconsumer {
         } catch (NamingException e) {
             return e.getMessage();
         }
-        try {
+        try (QueueConnection qcon = qconFactory.createQueueConnection();
+             QueueSession qsession = qcon.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+             QueueReceiver qreceiever = qsession.createReceiver(queue)) {
             String returnJms = "";
-            QueueConnection qcon = qconFactory.createQueueConnection();
-            QueueSession qsession = qcon.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-            QueueReceiver qreceiever = qsession.createReceiver(queue);
             TextMessage msg = qsession.createTextMessage();
             qcon.start();
             Message jmsMessage;
@@ -53,15 +52,15 @@ public class JMSconsumer {
             } while (jmsMessage != null);
             return returnJms;
         } catch (JMSException e) {
-            return  e.getMessage();
+            return e.getMessage();
         }
     }
 
-    public static String addMessage () {
-        return InsertDeleteDB.insert(readFromJMS());
+    public static String addMessage() {
+        return RestProcess.insert(readFromJMS());
     }
 
-    public static String deleteMessage () {
-        return InsertDeleteDB.delete(readFromJMS());
+    public static String deleteMessage() {
+        return RestProcess.delete(readFromJMS());
     }
 }
