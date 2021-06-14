@@ -1,10 +1,10 @@
 package ws;
 
-import db.SoapProcess;
+import ejb.MessagesBean;
 import service.Message;
 import service.MessageManagerService;
 
-import javax.ejb.Remote;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.jws.WebService;
@@ -18,16 +18,16 @@ import java.util.List;
 @Stateless
 public class MessageManagerImpl implements MessageManagerService {
 
-    @Inject
-    SoapProcess soap;
+    @EJB
+    MessagesBean bean;
 
     @Override
     public List<Message> getMessagesBySender(String sender) {
-        return soap.getMessagesBySender(sender);
+        return bean.getMessagesBySender(sender);
     }
 
     @Override
     public List<Message> getMessagesByDate(XMLGregorianCalendar sendTime) {
-        return soap.getMessagesByDate(sendTime);
+        return bean.getMessagesByDate(sendTime);
     }
 }
